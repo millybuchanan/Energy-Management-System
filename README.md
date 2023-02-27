@@ -10,10 +10,6 @@ You can clone this repository or import the
 project from Android Studio following the steps
 [here](https://developer.android.com/jetpack/compose/setup#sample).
 
-## Screenshots
-
-<img src="screenshots/screenshots.png"/>
-
 ## Features
 
 This sample contains several screens: a welcome screen, where the user can enter their email, sign in and sign up screens and a survey screen. The app has light and dark themes.
