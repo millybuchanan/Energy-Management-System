@@ -19,7 +19,8 @@ package com.example.compose.jetsurvey.survey
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.compose.jetsurvey.R
 import com.example.compose.jetsurvey.survey.question.*
 

@@ -101,9 +101,9 @@ fun SliderQuestion(
         }
     }
 }
-
-@Preview(name = "Light", uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(name = "Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
+/*
+//@Preview(name = "Light", uiMode = Configuration.UI_MODE_NIGHT_NO)
+//@Preview(name = "Dark", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun SliderQuestionPreview() {
     JetsurveyTheme {
@@ -115,6 +115,40 @@ fun SliderQuestionPreview() {
                 startTextResource = R.string.strongly_dislike,
                 endTextResource = R.string.strongly_like,
                 neutralTextResource = R.string.neutral
+            )
+        }
+    }
+}*/
+
+@Composable
+@Preview(name = "Light", uiMode = Configuration.UI_MODE_NIGHT_NO)
+fun BrightnessQuestionPreview() {
+    JetsurveyTheme {
+        Surface {
+            SliderQuestion(
+                titleResourceId = R.string.brightness,
+                value = 0.4f,
+                onValueChange = {},
+                startTextResource = R.string.very_dim,
+                endTextResource = R.string.neutral,
+                neutralTextResource = R.string.very_bright
+            )
+        }
+    }
+}
+
+@Composable
+@Preview(name = "Light", uiMode = Configuration.UI_MODE_NIGHT_NO)
+fun TemperatureQuestionPreview() {
+    JetsurveyTheme() {
+        Surface {
+            SliderQuestion(
+                titleResourceId = R.string.temperature,
+                value = 0.4f,
+                onValueChange = {},
+                startTextResource = R.string.cool_temp,
+                neutralTextResource = R.string.neutral_temp,
+                endTextResource = R.string.warm_temp
             )
         }
     }

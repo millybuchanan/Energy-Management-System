@@ -86,4 +86,10 @@
     <string name="brightness">How bright do you like the lights in your home?</string>
     <string name="very_dim">Very\nDim</string>
     <string name="very_bright">Very\nBright</string>
+
+    <string name="temperature">What temperature do you like your home to be?</string>
+    <string name="cool_temp">Cool\n60–65 F</string>
+    <string name="neutral_temp">Neutral\n70–75 F</string>
+    <string name="warm_temp">Warm\n80–85 F</string>
+
 </resources>
