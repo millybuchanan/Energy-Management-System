@@ -91,6 +91,13 @@ fun SurveyRoute(
         ) { targetState ->
 
             when (targetState.surveyQuestion) {
+                SurveyQuestion.IDEAL_BRIGHTNESS -> {
+                    BrightnessQuestion(
+                        value = viewModel.idealBrightnessResponse,
+                        onValueChange = viewModel::onIdealBrightnessResponse,
+                        modifier = modifier,
+                    )
+                }
                 SurveyQuestion.FREE_TIME -> {
                     FreeTimeQuestion(
                         selectedAnswers = viewModel.freeTimeResponse,

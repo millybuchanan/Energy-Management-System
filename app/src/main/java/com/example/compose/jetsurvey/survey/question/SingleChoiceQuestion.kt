@@ -20,13 +20,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.MaterialTheme
@@ -49,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import com.example.compose.jetsurvey.R
 import com.example.compose.jetsurvey.survey.QuestionWrapper
 
+
 @Composable
 fun SingleChoiceQuestion(
     @StringRes titleResourceId: Int,
@@ -65,6 +60,7 @@ fun SingleChoiceQuestion(
     ) {
         possibleAnswers.forEach {
             val selected = it == selectedAnswer
+
             RadioButtonWithImageRow(
                 modifier = Modifier.padding(vertical = 8.dp),
                 text = stringResource(id = it.stringResourceId),
@@ -76,11 +72,12 @@ fun SingleChoiceQuestion(
     }
 }
 
+
 /*
 @Composable
 fun RadioButton(
     text: String,
-    selected: Boolean,
+    selected: Int,
     onOptionSelected: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -105,8 +102,23 @@ fun RadioButton(
                 selected,
                 onClick = onOptionSelected,
                 role = Role.RadioButton
-            )
-    )
+            ))
+        {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Spacer(Modifier.width(8.dp))
+
+                Text(text, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
+                Box(Modifier.padding(8.dp)) {
+                    RadioButton(selected, onClick = null)
+                }
+            }
+        }
 }*/
 
 @Composable

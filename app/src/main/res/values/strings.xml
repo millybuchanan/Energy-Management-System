@@ -82,4 +82,8 @@
     <string name="strongly_dislike">Strongly\nDislike</string>
     <string name="strongly_like">Strongly\nLike</string>
     <string name="neutral">Neutral</string>
+
+    <string name="brightness">How bright do you like the lights in your home?</string>
+    <string name="very_dim">Very\nDim</string>
+    <string name="very_bright">Very\nBright</string>
 </resources>

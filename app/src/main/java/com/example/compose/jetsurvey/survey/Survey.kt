@@ -19,21 +19,40 @@ package com.example.compose.jetsurvey.survey
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.jetsurvey.R
-import com.example.compose.jetsurvey.survey.question.DateQuestion
-import com.example.compose.jetsurvey.survey.question.MultipleChoiceQuestion
-import com.example.compose.jetsurvey.survey.question.PhotoQuestion
-import com.example.compose.jetsurvey.survey.question.SingleChoiceQuestion
-import com.example.compose.jetsurvey.survey.question.SliderQuestion
-import com.example.compose.jetsurvey.survey.question.Superhero
+import com.example.compose.jetsurvey.survey.question.*
 
 /*
 @Composable
 fun GenderQuestion(
-    selectedAnswer: Age?,
-    onOptionSelected: ,
+    selectedAnswer: List<Int>,
+    onOptionSelected: (selected: Boolean, answer: Int) -> Unit,
     modifier: Modifier = Modifier,
-)*/
+) {
+    RadioButton(
+        text = R.string.age,
+        selected = R.string.select_one,
+        onOptionSelected = { onOptionSelected })
+}*/
+
+
+@Composable
+fun BrightnessQuestion(
+    value: Float?,
+    onValueChange: (Float) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    SliderQuestion(
+        titleResourceId = R.string.brightness,
+        value = value,
+        onValueChange = onValueChange,
+        startTextResource = R.string.very_dim,
+        neutralTextResource = R.string.neutral,
+        endTextResource = R.string.very_bright,
+        modifier = modifier,
+    )
+}
 
 @Composable
 fun FreeTimeQuestion(

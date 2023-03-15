@@ -41,6 +41,10 @@ class SurveyViewModel(
 
     // ----- Responses exposed as State -----
 
+    private val _idealBrightnessResponse = mutableStateOf<Float?>(null)
+    val idealBrightnessResponse: Float?
+        get() = _idealBrightnessResponse.value
+
     private val _freeTimeResponse = mutableStateListOf<Int>()
     val freeTimeResponse: List<Int>
         get() = _freeTimeResponse
@@ -123,6 +127,10 @@ class SurveyViewModel(
         _isNextEnabled.value = getIsNextEnabled()
     }
 
+    fun onIdealBrightnessResponse(feeling: Float) {
+        _idealBrightnessResponse.value = feeling
+        _isNextEnabled.value = getIsNextEnabled()
+    }
     fun onFeelingAboutSelfiesResponse(feeling: Float) {
         _feelingAboutSelfiesResponse.value = feeling
         _isNextEnabled.value = getIsNextEnabled()
@@ -137,6 +145,7 @@ class SurveyViewModel(
 
     private fun getIsNextEnabled(): Boolean {
         return when (questionOrder[questionIndex]) {
+            SurveyQuestion.IDEAL_BRIGHTNESS ->_idealBrightnessResponse.value != null
             SurveyQuestion.FREE_TIME -> _freeTimeResponse.isNotEmpty()
             SurveyQuestion.SUPERHERO -> _superheroResponse.value != null
             SurveyQuestion.LAST_TAKEAWAY -> _takeawayResponse.value != null
@@ -169,6 +178,7 @@ class SurveyViewModelFactory(
 }
 
 enum class SurveyQuestion {
+    IDEAL_BRIGHTNESS,
     FREE_TIME,
     SUPERHERO,
     LAST_TAKEAWAY,
