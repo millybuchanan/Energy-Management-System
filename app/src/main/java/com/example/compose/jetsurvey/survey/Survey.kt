@@ -37,7 +37,7 @@ fun GenderQuestion(
         onOptionSelected = { onOptionSelected })
 }*/
 
-
+//also add temperaturequestion here
 @Composable
 fun BrightnessQuestion(
     value: Float?,

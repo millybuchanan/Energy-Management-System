@@ -48,9 +48,9 @@ import com.example.compose.jetsurvey.survey.QuestionWrapper
 fun SingleChoiceQuestion(
     @StringRes titleResourceId: Int,
     @StringRes directionsResourceId: Int,
-    possibleAnswers: List<Superhero>,
-    selectedAnswer: Superhero?,
-    onOptionSelected: (Superhero) -> Unit,
+    possibleAnswers: List<Superhero>, //prev: List<Superhero>
+    selectedAnswer: Superhero?, //prev: Superhero?
+    onOptionSelected: (Superhero) -> Unit, //prev: (Superhero) -> Unit
     modifier: Modifier = Modifier,
 ) {
     QuestionWrapper(
@@ -197,3 +197,13 @@ fun SingleChoiceQuestionPreview() {
 }
 
 data class Superhero(@StringRes val stringResourceId: Int, @DrawableRes val imageResourceId: Int)
+
+/*
+@Composable
+fun GenderQuestionPreview() {
+    val possibleAnswers = listOf(
+        (R.string.female),
+        (R.string.male),
+        (R.string.nonbinary),
+    )
+}*/
