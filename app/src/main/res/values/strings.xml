@@ -92,4 +92,9 @@
     <string name="neutral_temp">Neutral\n70–75 F</string>
     <string name="warm_temp">Warm\n80–85 F</string>
 
+    <string name="priorityquestion">On a scale from 1-10, rank your priority.</string>
+    <string name="not_extremely_important">Not Extremely Important</string>
+    <string name="extremely_important">Extremely Important</string>
+
+    <string name="energy_saving">Energy Saving</string>
 </resources>

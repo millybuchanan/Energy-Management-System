@@ -153,3 +153,55 @@ fun TemperatureQuestionPreview() {
         }
     }
 }
+
+
+
+@Composable
+@Preview
+fun PriorityQuestionPreview() {
+    JetsurveyTheme() {
+        Surface {
+            Row {
+                Text(
+                    text = stringResource(R.string.energy_saving),
+                    style = MaterialTheme.typography.bodySmall,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1.8f)
+
+                )
+            }
+            Row {
+                SliderQuestion(
+                    titleResourceId = R.string.priorityquestion,
+                    value = 0.4f,
+                    onValueChange = {},
+                    startTextResource = R.string.not_extremely_important,
+                    neutralTextResource = R.string.neutral,
+                    endTextResource = R.string.extremely_important,
+                )
+            }
+            Row {
+                SliderQuestion(
+                    titleResourceId = R.string.priorityquestion,
+                    value = 0.4f,
+                    onValueChange = {},
+                    startTextResource = R.string.not_extremely_important,
+                    neutralTextResource = R.string.neutral,
+                    endTextResource = R.string.extremely_important,
+                )
+            }
+            Row {
+                SliderQuestion(
+                    titleResourceId = R.string.priorityquestion,
+                    value = 0.4f,
+                    onValueChange = {},
+                    startTextResource = R.string.not_extremely_important,
+                    neutralTextResource = R.string.neutral,
+                    endTextResource = R.string.extremely_important,
+                )
+            }
+        }
+    }
+}

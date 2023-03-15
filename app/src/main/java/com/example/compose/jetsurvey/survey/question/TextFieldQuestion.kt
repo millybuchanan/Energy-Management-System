@@ -40,3 +40,33 @@ fun TextFieldQuestion() {
         placeholder = { Text("My age is ...") }
     )
 }
+
+@Preview
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+fun ZipCodeQuestionPreview() {
+
+    var text by rememberSaveable { mutableStateOf("") }
+
+    TextField(
+        value = text,
+        onValueChange = { text = it },
+        label = { Text("ZipCode") },
+        placeholder = { Text("My zipcode is ...") }
+    )
+}
+
+@Preview
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+fun IdealIndoorTempQuestionPreview() {
+
+    var text by rememberSaveable { mutableStateOf("") }
+
+    TextField(
+        value = text,
+        onValueChange = { text = it },
+        label = { Text("Ideal Indoor Temp") },
+        placeholder = { Text("Temperature in Fahrenheit ...") }
+    )
+}
