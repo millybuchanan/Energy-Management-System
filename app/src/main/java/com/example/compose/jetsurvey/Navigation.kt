@@ -21,11 +21,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.jetsurvey.Destinations.DASHBOARD_ROUTE
+import com.example.compose.jetsurvey.Destinations.FEEDBACK_ROUTE
+import com.example.compose.jetsurvey.Destinations.PREFERENCES_ROUTE
+import com.example.compose.jetsurvey.Destinations.PROFILE_ROUTE
 import com.example.compose.jetsurvey.Destinations.SIGN_IN_ROUTE
 import com.example.compose.jetsurvey.Destinations.SIGN_UP_ROUTE
 import com.example.compose.jetsurvey.Destinations.SURVEY_RESULTS_ROUTE
 import com.example.compose.jetsurvey.Destinations.SURVEY_ROUTE
 import com.example.compose.jetsurvey.Destinations.WELCOME_ROUTE
+import com.example.compose.jetsurvey.screens.DashboardScreen
+import com.example.compose.jetsurvey.screens.PreferencesScreen
 import com.example.compose.jetsurvey.signinsignup.SignInRoute
 import com.example.compose.jetsurvey.signinsignup.SignUpRoute
 import com.example.compose.jetsurvey.signinsignup.WelcomeRoute
@@ -38,6 +44,11 @@ object Destinations {
     const val SIGN_IN_ROUTE = "signin/{email}"
     const val SURVEY_ROUTE = "survey"
     const val SURVEY_RESULTS_ROUTE = "surveyresults"
+
+    const val DASHBOARD_ROUTE = "dashboard"
+    const val PREFERENCES_ROUTE = "preferences"
+    const val FEEDBACK_ROUTE = "feedback"
+    const val PROFILE_ROUTE = "profile"
 }
 
 @Composable
@@ -100,9 +111,29 @@ fun JetsurveyNavHost(
         }
 
         composable(SURVEY_RESULTS_ROUTE) {
-            SurveyResultScreen {
-                navController.popBackStack(WELCOME_ROUTE, false)
-            }
+            SurveyResultScreen(
+                onDonePressed = {
+                    navController.navigate(DASHBOARD_ROUTE) {
+                        popUpTo(SURVEY_ROUTE) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(DASHBOARD_ROUTE) {
+            DashboardScreen(name = "Name")
+        }
+
+        composable(PREFERENCES_ROUTE) {
+            PreferencesScreen()
+        }
+
+        composable(FEEDBACK_ROUTE) {
+//            FeedbackScreen()
+        }
+
+        composable(PROFILE_ROUTE) {
+//            ProfileScreen()
         }
 
     }
