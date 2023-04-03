@@ -38,7 +38,7 @@ object Destinations {
     const val SIGN_IN_ROUTE = "signin/{email}"
     const val SURVEY_ROUTE = "survey"
     const val SURVEY_RESULTS_ROUTE = "surveyresults"
-
+    const val MAIN_SCREEN_ROUTE = "mainscreen"
 }
 
 @Composable
@@ -103,12 +103,16 @@ fun JetsurveyNavHost(
         composable(SURVEY_RESULTS_ROUTE) {
             SurveyResultScreen(
                 onDonePressed = {
-                    navController.navigate(Menu_Destinations.DASHBOARD_ROUTE) {
+                    navController.navigate(Destinations.MAIN_SCREEN_ROUTE) {
                         popUpTo(SURVEY_ROUTE) { inclusive = true }
                     }
                 }
             )
 
+        }
+
+        composable(Destinations.MAIN_SCREEN_ROUTE) {
+            MainScreenView()
         }
 
     }
