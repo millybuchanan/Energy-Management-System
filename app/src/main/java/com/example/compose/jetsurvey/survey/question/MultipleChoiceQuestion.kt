@@ -65,7 +65,6 @@ fun MultipleChoiceQuestion(
     }
 }
 
-
 @Composable
 fun CheckboxRow(
     text: String,

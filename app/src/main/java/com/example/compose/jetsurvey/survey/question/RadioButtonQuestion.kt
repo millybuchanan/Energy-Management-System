@@ -1,7 +1,6 @@
 package com.example.compose.jetsurvey.survey.question
 
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 
@@ -19,13 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
-
-
-@Composable
-fun RadioButtonQuestion2() {
-
-}
 
 @Preview
 @Composable

@@ -30,7 +30,6 @@ class SurveyViewModel(
 ) : ViewModel() {
 
     private val questionOrder: List<SurveyQuestion> = listOf(
-        SurveyQuestion.IDEAL_BRIGHTNESS,
         SurveyQuestion.FREE_TIME,
         SurveyQuestion.SUPERHERO,
         SurveyQuestion.LAST_TAKEAWAY,
