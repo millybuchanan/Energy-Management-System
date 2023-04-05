@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         setContent {
             JetsurveyTheme {
                 JetsurveyNavHost()
-                //LoginApplication()
             }
         }
     }
