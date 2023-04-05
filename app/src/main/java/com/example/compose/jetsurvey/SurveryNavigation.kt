@@ -21,11 +21,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.jetsurvey.Destinations.MAIN_SCREEN_ROUTE
 import com.example.compose.jetsurvey.Destinations.SIGN_IN_ROUTE
 import com.example.compose.jetsurvey.Destinations.SIGN_UP_ROUTE
 import com.example.compose.jetsurvey.Destinations.SURVEY_RESULTS_ROUTE
 import com.example.compose.jetsurvey.Destinations.SURVEY_ROUTE
 import com.example.compose.jetsurvey.Destinations.WELCOME_ROUTE
+import com.example.compose.jetsurvey.Menu_Destinations.DASHBOARD_ROUTE
 import com.example.compose.jetsurvey.signinsignup.SignInRoute
 import com.example.compose.jetsurvey.signinsignup.SignUpRoute
 import com.example.compose.jetsurvey.signinsignup.WelcomeRoute
@@ -68,7 +70,13 @@ fun JetsurveyNavHost(
             SignInRoute(
                 email = startingEmail,
                 onSignInSubmitted = {
-                    navController.navigate(SURVEY_ROUTE)
+                    val newUser = false // add authentication with backend here
+                    if (newUser) {
+                        navController.navigate(SURVEY_ROUTE)
+                    } else {
+                        navController.navigate(MAIN_SCREEN_ROUTE)
+                    }
+
                 },
                 onSignInAsGuest = {
                     navController.navigate(SURVEY_ROUTE)
