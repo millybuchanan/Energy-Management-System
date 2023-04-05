@@ -17,7 +17,6 @@ import com.example.compose.jetsurvey.survey.question.SliderQuestion
 import com.example.compose.jetsurvey.theme.JetsurveyTheme
 
 @Composable
-@Preview(name = "Light", uiMode = Configuration.UI_MODE_NIGHT_NO)
 fun PreferencesScreen() {
     Column {
         Text(

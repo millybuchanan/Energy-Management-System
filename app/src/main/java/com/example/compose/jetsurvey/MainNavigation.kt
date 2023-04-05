@@ -5,6 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.compose.jetsurvey.profile.FeedbackQuestionPreview
+import com.example.compose.jetsurvey.profile.ProfilePagePreview
 import com.example.compose.jetsurvey.screens.DashboardScreen
 import com.example.compose.jetsurvey.screens.PreferencesScreen
 
@@ -35,11 +37,11 @@ fun LoginApplication(
         }
 
         composable(Menu_Destinations.FEEDBACK_ROUTE) {
-//            FeedbackScreen()
+            FeedbackQuestionPreview()
         }
 
         composable(Menu_Destinations.PROFILE_ROUTE) {
-//            ProfileScreen()
+            ProfilePagePreview()
         }
 
     }

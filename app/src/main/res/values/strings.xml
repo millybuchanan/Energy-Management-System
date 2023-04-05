@@ -103,6 +103,14 @@
     <string name="low_consumption">0</string>
     <string name="mid_consumption">50</string>
     <string name="high_consumption">100</string>
+    <string name="TooHot">Too Hot</string>
+    <string name="TooCold">Too Cold</string>
+    <string name="TooDry">Too Dry</string>
+    <string name="TooHumid">Too Humid</string>
+    <string name="TooBright">Too Bright</string>
+    <string name="TooDark">Too Dark</string>
+    <string name="Satisfactory">Satisfactory</string>
+
 
     <string name="preference_brightness">I want my lights to be this bright (%):</string>
     <string name="low_brightness">0</string>
@@ -113,4 +121,12 @@
     <string name="low_temperature">0</string>
     <string name="mid_temperature">50</string>
     <string name="high_temperature">100</string>
+
+    <!-- Feedback page -->
+    <string name="Feeling">How are you feeling?</string>
+    <string name="FeedbackTemp">Temperature</string>
+    <string name="FeedbackHumidity">Humidity</string>
+    <string name="FeedbackLight">Light</string>
+
+    <string name="Profile">Profile</string>
 </resources>
