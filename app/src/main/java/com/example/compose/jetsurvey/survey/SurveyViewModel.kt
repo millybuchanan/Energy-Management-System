@@ -36,6 +36,7 @@ class SurveyViewModel(
         SurveyQuestion.LAST_TAKEAWAY,
         SurveyQuestion.FEELING_ABOUT_SELFIES,
         SurveyQuestion.TAKE_SELFIE,
+
     )
 
     private var questionIndex = 0
@@ -46,6 +47,10 @@ class SurveyViewModel(
     private val _userAgeResponse = mutableStateOf<Int?>(null)
     val userAgeResponse: Int?
         get() = _userAgeResponse.value
+
+    fun updateUserAgeResponse(age: Int?) {
+        _userAgeResponse.value = age
+    }
 
     /*
     private val _genderResponse = mutableStateListOf<String>()

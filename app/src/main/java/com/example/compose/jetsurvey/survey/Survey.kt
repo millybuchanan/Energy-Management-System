@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 //import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.compose.jetsurvey.R
 import com.example.compose.jetsurvey.survey.question.*
+import kotlin.reflect.KFunction1
 
 
 /*
@@ -51,20 +52,24 @@ fun GenderQuestion(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgeQuestion(
- //   @StringRes titleResourceId: Int,
-
     value: Int?,
-    onValueChange: (Int) -> Unit,
+    onValueChange: KFunction1<Int, Unit>,
     modifier: Modifier = Modifier,
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
-        TextField(
-            value = text,
-            onValueChange = { text = it },
-            label = { Text("Age") },
-            placeholder = { Text("My age is ...") },
-            modifier = modifier,
-        )
+    var text by rememberSaveable { mutableStateOf(value?.toString() ?: "") }
+    TextField(
+        value = text,
+        onValueChange = { newText ->
+            text = newText
+            val age = newText.toIntOrNull()
+            if (age != null) {
+                onValueChange(age)
+            }
+        },
+        label = { Text("Age") },
+        placeholder = { Text("My age is ...") },
+        modifier = modifier,
+    )
 }
 
 
