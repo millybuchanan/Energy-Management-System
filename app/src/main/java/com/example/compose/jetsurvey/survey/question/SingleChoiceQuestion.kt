@@ -198,6 +198,7 @@ fun SingleChoiceQuestionPreview() {
 
 data class Superhero(@StringRes val stringResourceId: Int, @DrawableRes val imageResourceId: Int)
 
+
 /*
 @Composable
 fun GenderQuestionPreview() {
@@ -205,5 +206,14 @@ fun GenderQuestionPreview() {
         (R.string.female),
         (R.string.male),
         (R.string.nonbinary),
+    )
+    var selectedAnswer by remember { mutableStateOf<String?>(null) }
+
+    SingleChoiceQuestion(
+        titleResourceId = R.string.gender,
+        directionsResourceId = R.string.select_one,
+        possibleAnswers = possibleAnswers,
+        selectedAnswer = selectedAnswer,
+        onOptionSelected = { selectedAnswer = it },
     )
 }*/

@@ -17,12 +17,20 @@
 package com.example.compose.jetsurvey.survey
 
 import android.net.Uri
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 //import androidx.compose.ui.tooling.preview.Preview
 //import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.compose.jetsurvey.R
 import com.example.compose.jetsurvey.survey.question.*
+
 
 /*
 @Composable
@@ -37,7 +45,30 @@ fun GenderQuestion(
         onOptionSelected = { onOptionSelected })
 }*/
 
-//also add temperaturequestion here
+//also add temperature question here
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AgeQuestion(
+ //   @StringRes titleResourceId: Int,
+
+    value: Int?,
+    onValueChange: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var text by rememberSaveable { mutableStateOf("") }
+        TextField(
+            value = text,
+            onValueChange = { text = it },
+            label = { Text("Age") },
+            placeholder = { Text("My age is ...") },
+            modifier = modifier,
+        )
+}
+
+
+
 @Composable
 fun BrightnessQuestion(
     value: Float?,
@@ -54,6 +85,27 @@ fun BrightnessQuestion(
         modifier = modifier,
     )
 }
+
+/*
+@Composable
+fun GenderQuestion(
+    selectedAnswer: List<String>,
+    onOptionSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    SingleChoiceQuestion(
+        titleResourceId = R.string.gender,
+        directionsResourceId = R.string.select_one,
+        possibleAnswers = listOf(
+            R.string.female,
+            R.string.male,
+            R.string.nonbinary,
+        ),
+        selectedAnswer = selectedAnswer,
+        onOptionSelected = onOptionSelected,
+        modifier = modifier,
+    )
+}*/
 
 @Composable
 fun FreeTimeQuestion(
@@ -77,6 +129,7 @@ fun FreeTimeQuestion(
         modifier = modifier,
     )
 }
+
 
 @Composable
 fun SuperheroQuestion(

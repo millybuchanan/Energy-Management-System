@@ -49,6 +49,9 @@
     <string name="age">How old are you?</string>
     <string name="in_my_free_time">What do you do in your free time?</string>
     <string name="gender">What is your gender?</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="nonbinary">Non-binary</string>
     <string name="zipcode">What is your zipcode?</string>
     <string name="read">Read</string>
     <string name="work_out">Workout</string>

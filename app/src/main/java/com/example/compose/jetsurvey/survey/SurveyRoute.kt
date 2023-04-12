@@ -69,7 +69,7 @@ fun SurveyRoute(
         onDonePressed = { viewModel.onDonePressed(onSurveyComplete) }
     ) { paddingValues ->
 
-        val modifier = Modifier.padding(paddingValues)
+        var modifier = Modifier.padding(paddingValues)
 
         AnimatedContent(
             targetState = surveyScreenData,
@@ -91,6 +91,13 @@ fun SurveyRoute(
         ) { targetState ->
 
             when (targetState.surveyQuestion) {
+                SurveyQuestion.AGE -> {
+                    AgeQuestion(
+                    value = viewModel.userAgeResponse,
+                    onValueChange = viewModel::onAgeResponse,
+                    modifier = modifier,
+                    )
+                }
                 SurveyQuestion.IDEAL_BRIGHTNESS -> {
                     BrightnessQuestion(
                         value = viewModel.idealBrightnessResponse,
@@ -106,7 +113,9 @@ fun SurveyRoute(
                     )
                 }
 
-                SurveyQuestion.SUPERHERO -> SuperheroQuestion(
+
+                SurveyQuestion.SUPERHERO ->
+                    SuperheroQuestion(
                     selectedAnswer = viewModel.superheroResponse,
                     onOptionSelected = viewModel::onSuperheroResponse,
                     modifier = modifier,

@@ -30,6 +30,7 @@ class SurveyViewModel(
 ) : ViewModel() {
 
     private val questionOrder: List<SurveyQuestion> = listOf(
+        SurveyQuestion.AGE,
         SurveyQuestion.FREE_TIME,
         SurveyQuestion.SUPERHERO,
         SurveyQuestion.LAST_TAKEAWAY,
@@ -40,6 +41,16 @@ class SurveyViewModel(
     private var questionIndex = 0
 
     // ----- Responses exposed as State -----
+
+
+    private val _userAgeResponse = mutableStateOf<Int?>(null)
+    val userAgeResponse: Int?
+        get() = _userAgeResponse.value
+
+    /*
+    private val _genderResponse = mutableStateListOf<String>()
+    val genderResponse: List<String>
+        get() = _genderResponse*/
 
     private val _idealBrightnessResponse = mutableStateOf<Float?>(null)
     val idealBrightnessResponse: Float?
@@ -131,6 +142,17 @@ class SurveyViewModel(
         _idealBrightnessResponse.value = feeling
         _isNextEnabled.value = getIsNextEnabled()
     }
+
+    /*
+    fun onGenderResponse(response: String) {
+        _genderResponse.value = response
+        _isNextEnabled.value = getIsNextEnabled()
+    }*/
+
+    fun onAgeResponse(response: Int) {
+        _userAgeResponse.value = response
+        _isNextEnabled.value = getIsNextEnabled()
+    }
     fun onFeelingAboutSelfiesResponse(feeling: Float) {
         _feelingAboutSelfiesResponse.value = feeling
         _isNextEnabled.value = getIsNextEnabled()
@@ -145,6 +167,8 @@ class SurveyViewModel(
 
     private fun getIsNextEnabled(): Boolean {
         return when (questionOrder[questionIndex]) {
+            SurveyQuestion.AGE -> _userAgeResponse.value != null
+            //SurveyQuestion.GENDER -> _genderResponse.value != null
             SurveyQuestion.IDEAL_BRIGHTNESS ->_idealBrightnessResponse.value != null
             SurveyQuestion.FREE_TIME -> _freeTimeResponse.isNotEmpty()
             SurveyQuestion.SUPERHERO -> _superheroResponse.value != null
@@ -178,6 +202,8 @@ class SurveyViewModelFactory(
 }
 
 enum class SurveyQuestion {
+    AGE,
+    //GENDER,
     IDEAL_BRIGHTNESS,
     FREE_TIME,
     SUPERHERO,
