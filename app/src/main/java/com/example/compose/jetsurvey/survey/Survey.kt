@@ -17,6 +17,7 @@
 package com.example.compose.jetsurvey.survey
 
 import android.net.Uri
+import androidx.annotation.StringRes
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -54,23 +55,29 @@ fun GenderQuestion(
 fun AgeQuestion(
     value: Int?,
     onValueChange: KFunction1<Int, Unit>,
+    @StringRes titleResourceId: Int,
     modifier: Modifier = Modifier,
 ) {
     var text by rememberSaveable { mutableStateOf(value?.toString() ?: "") }
-
-    TextField(
-        value = text,
-        onValueChange = { newText ->
-            text = newText
-            val age = newText.toIntOrNull()
-            if (age != null) {
-                onValueChange(age)
-            }
-        },
-        label = { Text("Age") },
-        placeholder = { Text("My age is ...") },
+    QuestionWrapper(
+        titleResourceId = titleResourceId,
         modifier = modifier,
-    )
+    ) {
+        TextField(
+            value = text,
+            onValueChange = { newText ->
+                text = newText
+                val age = newText.toIntOrNull()
+                if (age != null) {
+                    onValueChange(age)
+                }
+            },
+            label = { Text("Age") },
+            placeholder = { Text("My age is ...") },
+            modifier = modifier,
+        )
+    }
+
 }
 
 @Composable

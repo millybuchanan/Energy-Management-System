@@ -37,14 +37,16 @@ fun TextFieldQuestion(
     QuestionWrapper(
         titleResourceId = titleResourceId,
         modifier = modifier,
-    )
-    TextField(
-        value = text,
-        onValueChange = { text = it },
-        label = { Text("Age") },
-        placeholder = { Text("My age is ...") },
+    ) {
+        TextField(
+            value = text,
+            onValueChange = { text = it },
+            label = { Text("Age") },
+            placeholder = { Text("My age is ...") },
 
-    )
+            )
+    }
+
 }
 
 
