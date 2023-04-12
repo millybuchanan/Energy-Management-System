@@ -107,6 +107,7 @@ fun SurveyRoute(
                         value = viewModel.zipcodeResponse,
                         onValueChange = viewModel::onZipcodeResponse,
                         modifier = modifier,
+                        titleResourceId = R.string.zipcode
                     )
                 }
                 SurveyQuestion.IDEAL_BRIGHTNESS -> {

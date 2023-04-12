@@ -86,22 +86,26 @@ fun ZipCodeQuestion(
     value: Int?,
     onValueChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    @StringRes titleResourceId: Int,
     ){
 
     var text by rememberSaveable { mutableStateOf("") }
 
-    TextField(
-        value = text,
-        onValueChange = { newText ->
-            text = newText
-            val zip = newText.toIntOrNull()
-            if (zip != null) {
-                onValueChange(zip)
-            } },
-        label = { Text("ZipCode") },
-        placeholder = { Text("My zipcode is ...") },
-        modifier = modifier
-    )
+    QuestionWrapper(titleResourceId = titleResourceId, modifier = modifier) {
+        TextField(
+            value = text,
+            onValueChange = { newText ->
+                text = newText
+                val zip = newText.toIntOrNull()
+                if (zip != null) {
+                    onValueChange(zip)
+                } },
+            label = { Text("ZipCode") },
+            placeholder = { Text("My zipcode is ...") },
+            modifier = modifier
+        )
+    }
+
 }
 
 
