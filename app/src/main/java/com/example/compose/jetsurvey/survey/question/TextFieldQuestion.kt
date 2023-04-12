@@ -29,13 +29,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun TextFieldQuestion(flag: Boolean) {
-
-   // QuestionWrapper(titleResourceId = Int) {
-    //
-   // }
+fun TextFieldQuestion(
+    @StringRes titleResourceId: Int,
+    modifier: Modifier = Modifier,
+    ) {
     var text by rememberSaveable { mutableStateOf("") }
-
+    QuestionWrapper(
+        titleResourceId = titleResourceId,
+        modifier = modifier,
+    )
     TextField(
         value = text,
         onValueChange = { text = it },
@@ -45,10 +47,10 @@ fun TextFieldQuestion(flag: Boolean) {
     )
 }
 
-@Preview
+
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun ZipCodeQuestionPreview() {
+fun ZipCodeQuestion(flag: Boolean) {
 
     var text by rememberSaveable { mutableStateOf("") }
 

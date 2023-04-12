@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.compose.jetsurvey.survey.question.ZipCodeQuestion
 import com.google.android.material.datepicker.MaterialDatePicker
 
 private const val CONTENT_ANIMATION_DURATION = 300
@@ -96,6 +97,14 @@ fun SurveyRoute(
                     value = viewModel.userAgeResponse,
                     onValueChange = viewModel::onAgeResponse,
                     modifier = modifier,
+                    )
+                }
+
+                SurveyQuestion.ZIPCODE -> {
+                    ZipCodeQuestion(
+                        value = viewModel.zipcodeResponse,
+                        onValueChange = viewModel::onZipcodeResponse,
+                        modifier = modifier,
                     )
                 }
                 SurveyQuestion.IDEAL_BRIGHTNESS -> {

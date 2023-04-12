@@ -31,6 +31,7 @@ class SurveyViewModel(
 
     private val questionOrder: List<SurveyQuestion> = listOf(
         SurveyQuestion.AGE,
+        SurveyQuestion.ZIPCODE,
         SurveyQuestion.FREE_TIME,
         SurveyQuestion.SUPERHERO,
         SurveyQuestion.LAST_TAKEAWAY,
@@ -51,6 +52,10 @@ class SurveyViewModel(
     fun updateUserAgeResponse(age: Int?) {
         _userAgeResponse.value = age
     }
+
+    private val _zipcodeResponse = mutableStateOf<Int?>(null)
+    val zipcodeResponse : Int?
+        get() = _zipcodeResponse.value
 
     /*
     private val _genderResponse = mutableStateListOf<String>()
@@ -158,6 +163,11 @@ class SurveyViewModel(
         _userAgeResponse.value = response
         _isNextEnabled.value = getIsNextEnabled()
     }
+
+    fun onZipcodeResponse(zip: Int) {
+        _zipcodeResponse.value = zip
+        _isNextEnabled.value = getIsNextEnabled()
+    }
     fun onFeelingAboutSelfiesResponse(feeling: Float) {
         _feelingAboutSelfiesResponse.value = feeling
         _isNextEnabled.value = getIsNextEnabled()
@@ -173,6 +183,7 @@ class SurveyViewModel(
     private fun getIsNextEnabled(): Boolean {
         return when (questionOrder[questionIndex]) {
             SurveyQuestion.AGE -> _userAgeResponse.value != null
+            SurveyQuestion.ZIPCODE -> _zipcodeResponse.value != null
             //SurveyQuestion.GENDER -> _genderResponse.value != null
             SurveyQuestion.IDEAL_BRIGHTNESS ->_idealBrightnessResponse.value != null
             SurveyQuestion.FREE_TIME -> _freeTimeResponse.isNotEmpty()
@@ -208,6 +219,7 @@ class SurveyViewModelFactory(
 
 enum class SurveyQuestion {
     AGE,
+    ZIPCODE,
     //GENDER,
     IDEAL_BRIGHTNESS,
     FREE_TIME,
