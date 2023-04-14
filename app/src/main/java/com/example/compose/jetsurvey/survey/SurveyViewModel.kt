@@ -32,6 +32,7 @@ class SurveyViewModel(
         SurveyQuestion.AGE,
         SurveyQuestion.ZIPCODE,
         SurveyQuestion.GENDER,
+        SurveyQuestion.IDEAL_BRIGHTNESS,
         SurveyQuestion.FREE_TIME,
         SurveyQuestion.LAST_TAKEAWAY,
         SurveyQuestion.FEELING_ABOUT_SELFIES,

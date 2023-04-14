@@ -157,8 +157,6 @@ fun FreeTimeQuestion(
         titleResourceId = R.string.age,
         directionsResourceId = R.string.select_all,
         possibleAnswers = listOf(
-            //R.string.read,
-            //R.string.work_out,
             R.string.draw,
             R.string.play_games,
             R.string.dance,
@@ -183,6 +181,7 @@ fun TakeawayQuestion(
         dateInMillis = dateInMillis,
         onClick = onClick,
         modifier = modifier,
+
     )
 }
 
