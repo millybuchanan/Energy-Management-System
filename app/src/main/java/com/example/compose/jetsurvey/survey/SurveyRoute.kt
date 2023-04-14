@@ -126,6 +126,13 @@ fun SurveyRoute(
                         modifier = modifier,
                     )
                 }
+                SurveyQuestion.IDEAL_TEMPERATURE -> {
+                    TemperatureQuestion(
+                        value = viewModel.idealTemperatureResponse,
+                        onValueChange = viewModel::onIdealTemperatureResponse,
+                        modifier = modifier,
+                    )
+                }
                 SurveyQuestion.FREE_TIME -> {
                     FreeTimeQuestion(
                         selectedAnswers = viewModel.freeTimeResponse,

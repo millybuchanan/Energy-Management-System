@@ -126,6 +126,23 @@ fun BrightnessQuestion(
     )
 }
 
+@Composable
+fun TemperatureQuestion(
+    value: Float?,
+    onValueChange: (Float) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    SliderQuestion(
+        titleResourceId = R.string.temperature,
+        value = value,
+        onValueChange = onValueChange,
+        startTextResource = R.string.cool_temp,
+        neutralTextResource = R.string.neutral_temp,
+        endTextResource = R.string.warm_temp,
+        modifier = modifier,
+    )
+}
+
 
 @Composable
 fun GenderQuestion(

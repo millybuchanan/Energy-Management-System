@@ -33,6 +33,7 @@ class SurveyViewModel(
         SurveyQuestion.ZIPCODE,
         SurveyQuestion.GENDER,
         SurveyQuestion.IDEAL_BRIGHTNESS,
+        SurveyQuestion.IDEAL_TEMPERATURE,
         SurveyQuestion.FREE_TIME,
         SurveyQuestion.LAST_TAKEAWAY,
         SurveyQuestion.FEELING_ABOUT_SELFIES,
@@ -64,6 +65,10 @@ class SurveyViewModel(
 
     private val _idealBrightnessResponse = mutableStateOf<Float?>(null)
     val idealBrightnessResponse: Float?
+        get() = _idealBrightnessResponse.value
+
+    private val _idealTemperatureResponse = mutableStateOf<Float?>(null)
+    val idealTemperatureResponse: Float?
         get() = _idealBrightnessResponse.value
 
     private val _freeTimeResponse = mutableStateListOf<Int>()
@@ -145,6 +150,11 @@ class SurveyViewModel(
         _isNextEnabled.value = getIsNextEnabled()
     }
 
+    fun onIdealTemperatureResponse(feeling: Float) {
+        _idealTemperatureResponse.value = feeling
+        _isNextEnabled.value = getIsNextEnabled()
+    }
+
 
     fun onGenderResponse(response: Int) {
         _genderResponse.value = response
@@ -179,6 +189,7 @@ class SurveyViewModel(
             SurveyQuestion.ZIPCODE -> _zipcodeResponse.value != null
             SurveyQuestion.GENDER -> _genderResponse != null
             SurveyQuestion.IDEAL_BRIGHTNESS ->_idealBrightnessResponse.value != null
+            SurveyQuestion.IDEAL_TEMPERATURE ->_idealTemperatureResponse.value != null
             SurveyQuestion.FREE_TIME -> _freeTimeResponse.isNotEmpty()
             SurveyQuestion.LAST_TAKEAWAY -> _takeawayResponse.value != null
             SurveyQuestion.FEELING_ABOUT_SELFIES -> _feelingAboutSelfiesResponse.value != null
@@ -214,6 +225,7 @@ enum class SurveyQuestion {
     ZIPCODE,
     GENDER,
     IDEAL_BRIGHTNESS,
+    IDEAL_TEMPERATURE,
     FREE_TIME,
     LAST_TAKEAWAY,
     FEELING_ABOUT_SELFIES,
