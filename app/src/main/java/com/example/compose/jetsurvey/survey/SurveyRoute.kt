@@ -110,6 +110,15 @@ fun SurveyRoute(
                         titleResourceId = R.string.zipcode
                     )
                 }
+
+                SurveyQuestion.GENDER -> {
+                    GenderQuestion(
+                        selectedAnswer = viewModel.genderResponse,
+                        onOptionSelected = viewModel::onGenderResponse,
+                        modifier = modifier
+                    )
+                }
+
                 SurveyQuestion.IDEAL_BRIGHTNESS -> {
                     BrightnessQuestion(
                         value = viewModel.idealBrightnessResponse,
@@ -125,13 +134,6 @@ fun SurveyRoute(
                     )
                 }
 
-
-                SurveyQuestion.SUPERHERO ->
-                    SuperheroQuestion(
-                    selectedAnswer = viewModel.superheroResponse,
-                    onOptionSelected = viewModel::onSuperheroResponse,
-                    modifier = modifier,
-                )
 
                 SurveyQuestion.LAST_TAKEAWAY -> {
                     val supportFragmentManager =

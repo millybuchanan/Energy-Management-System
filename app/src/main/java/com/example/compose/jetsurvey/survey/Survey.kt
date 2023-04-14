@@ -34,18 +34,18 @@ import com.example.compose.jetsurvey.survey.question.*
 import kotlin.reflect.KFunction1
 
 
-/*
-@Composable
-fun GenderQuestion(
-    selectedAnswer: List<Int>,
-    onOptionSelected: (selected: Boolean, answer: Int) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    RadioButton(
-        text = R.string.age,
-        selected = R.string.select_one,
-        onOptionSelected = { onOptionSelected })
-}*/
+
+//@Composable
+//fun GenderQuestion(
+//    selectedAnswer: List<Int>,
+//    onOptionSelected: (selected: Boolean, answer: Int) -> Unit,
+//    modifier: Modifier = Modifier,
+//) {
+//    RadioButton(
+//        text = R.string.age,
+//        selected = R.string.select_one,
+//        onOptionSelected = { onOptionSelected })
+//}
 
 //also add temperature question here
 
@@ -126,10 +126,10 @@ fun BrightnessQuestion(
     )
 }
 
-/*
+
 @Composable
 fun GenderQuestion(
-    selectedAnswer: List<String>,
+    selectedAnswer: Int?,
     onOptionSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -145,7 +145,7 @@ fun GenderQuestion(
         onOptionSelected = onOptionSelected,
         modifier = modifier,
     )
-}*/
+}
 
 @Composable
 fun FreeTimeQuestion(
@@ -170,27 +170,6 @@ fun FreeTimeQuestion(
     )
 }
 
-
-@Composable
-fun SuperheroQuestion(
-    selectedAnswer: Superhero?,
-    onOptionSelected: (Superhero) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    SingleChoiceQuestion(
-        titleResourceId = R.string.pick_superhero,
-        directionsResourceId = R.string.select_one,
-        possibleAnswers = listOf(
-            Superhero(R.string.spark, R.drawable.spark),
-            Superhero(R.string.lenz, R.drawable.lenz),
-            Superhero(R.string.bugchaos, R.drawable.bug_of_chaos),
-            Superhero(R.string.frag, R.drawable.frag),
-        ),
-        selectedAnswer = selectedAnswer,
-        onOptionSelected = onOptionSelected,
-        modifier = modifier,
-    )
-}
 
 @Composable
 fun TakeawayQuestion(

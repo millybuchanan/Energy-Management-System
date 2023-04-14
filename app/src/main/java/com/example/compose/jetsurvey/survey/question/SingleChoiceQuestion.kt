@@ -48,9 +48,9 @@ import com.example.compose.jetsurvey.survey.QuestionWrapper
 fun SingleChoiceQuestion(
     @StringRes titleResourceId: Int,
     @StringRes directionsResourceId: Int,
-    possibleAnswers: List<Superhero>, //prev: List<Superhero>
-    selectedAnswer: Superhero?, //prev: Superhero?
-    onOptionSelected: (Superhero) -> Unit, //prev: (Superhero) -> Unit
+    possibleAnswers: List<Int>,
+    selectedAnswer: Int?,
+    onOptionSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     QuestionWrapper(
@@ -63,8 +63,8 @@ fun SingleChoiceQuestion(
 
             RadioButtonWithImageRow(
                 modifier = Modifier.padding(vertical = 8.dp),
-                text = stringResource(id = it.stringResourceId),
-                imageResourceId = it.imageResourceId,
+                text = stringResource(id = it),
+                imageResourceId = null,
                 selected = selected,
                 onOptionSelected = { onOptionSelected(it) }
             )
@@ -124,7 +124,7 @@ fun RadioButton(
 @Composable
 fun RadioButtonWithImageRow(
     text: String,
-    @DrawableRes imageResourceId: Int,
+    @DrawableRes imageResourceId: Int?,
     selected: Boolean,
     onOptionSelected: () -> Unit,
     modifier: Modifier = Modifier,
@@ -158,14 +158,16 @@ fun RadioButtonWithImageRow(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(id = imageResourceId),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(56.dp)
-                    .clip(MaterialTheme.shapes.extraSmall)
-                    .padding(start = 0.dp, end = 8.dp)
-            )
+            imageResourceId?.let { painterResource(id = it) }?.let {
+                Image(
+                    painter = it,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(56.dp)
+                        .clip(MaterialTheme.shapes.extraSmall)
+                        .padding(start = 0.dp, end = 8.dp)
+                )
+            }
             Spacer(Modifier.width(8.dp))
 
             Text(text, Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
@@ -175,28 +177,6 @@ fun RadioButtonWithImageRow(
         }
     }
 }
-
-
-@Preview
-@Composable
-fun SingleChoiceQuestionPreview() {
-    val possibleAnswers = listOf(
-        Superhero(R.string.spark, R.drawable.spark),
-        Superhero(R.string.lenz, R.drawable.lenz),
-        Superhero(R.string.bugchaos, R.drawable.bug_of_chaos),
-    )
-    var selectedAnswer by remember { mutableStateOf<Superhero?>(null) }
-
-    SingleChoiceQuestion(
-        titleResourceId = R.string.pick_superhero,
-        directionsResourceId = R.string.select_one,
-        possibleAnswers = possibleAnswers,
-        selectedAnswer = selectedAnswer,
-        onOptionSelected = { selectedAnswer = it },
-    )
-}
-
-data class Superhero(@StringRes val stringResourceId: Int, @DrawableRes val imageResourceId: Int)
 
 
 /*

@@ -21,7 +21,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.compose.jetsurvey.survey.question.Superhero
 
 const val simpleDateFormatPattern = "EEE, MMM d"
 
@@ -32,8 +31,8 @@ class SurveyViewModel(
     private val questionOrder: List<SurveyQuestion> = listOf(
         SurveyQuestion.AGE,
         SurveyQuestion.ZIPCODE,
+        SurveyQuestion.GENDER,
         SurveyQuestion.FREE_TIME,
-        SurveyQuestion.SUPERHERO,
         SurveyQuestion.LAST_TAKEAWAY,
         SurveyQuestion.FEELING_ABOUT_SELFIES,
         SurveyQuestion.TAKE_SELFIE,
@@ -57,10 +56,10 @@ class SurveyViewModel(
     val zipcodeResponse : Int?
         get() = _zipcodeResponse.value
 
-    /*
-    private val _genderResponse = mutableStateListOf<String>()
-    val genderResponse: List<String>
-        get() = _genderResponse*/
+
+    private val _genderResponse = mutableStateOf<Int?>(null)
+    val genderResponse: Int?
+        get() = _genderResponse.value
 
     private val _idealBrightnessResponse = mutableStateOf<Float?>(null)
     val idealBrightnessResponse: Float?
@@ -69,10 +68,6 @@ class SurveyViewModel(
     private val _freeTimeResponse = mutableStateListOf<Int>()
     val freeTimeResponse: List<Int>
         get() = _freeTimeResponse
-
-    private val _superheroResponse = mutableStateOf<Superhero?>(null)
-    val superheroResponse: Superhero?
-        get() = _superheroResponse.value
 
     private val _takeawayResponse = mutableStateOf<Long?>(null)
     val takeawayResponse: Long?
@@ -138,10 +133,6 @@ class SurveyViewModel(
         _isNextEnabled.value = getIsNextEnabled()
     }
 
-    fun onSuperheroResponse(superhero: Superhero) {
-        _superheroResponse.value = superhero
-        _isNextEnabled.value = getIsNextEnabled()
-    }
 
     fun onTakeawayResponse(timestamp: Long) {
         _takeawayResponse.value = timestamp
@@ -153,11 +144,12 @@ class SurveyViewModel(
         _isNextEnabled.value = getIsNextEnabled()
     }
 
-    /*
-    fun onGenderResponse(response: String) {
+
+    fun onGenderResponse(response: Int) {
         _genderResponse.value = response
         _isNextEnabled.value = getIsNextEnabled()
-    }*/
+    }
+
 
     fun onAgeResponse(response: Int) {
         _userAgeResponse.value = response
@@ -184,10 +176,9 @@ class SurveyViewModel(
         return when (questionOrder[questionIndex]) {
             SurveyQuestion.AGE -> _userAgeResponse.value != null
             SurveyQuestion.ZIPCODE -> _zipcodeResponse.value != null
-            //SurveyQuestion.GENDER -> _genderResponse.value != null
+            SurveyQuestion.GENDER -> _genderResponse != null
             SurveyQuestion.IDEAL_BRIGHTNESS ->_idealBrightnessResponse.value != null
             SurveyQuestion.FREE_TIME -> _freeTimeResponse.isNotEmpty()
-            SurveyQuestion.SUPERHERO -> _superheroResponse.value != null
             SurveyQuestion.LAST_TAKEAWAY -> _takeawayResponse.value != null
             SurveyQuestion.FEELING_ABOUT_SELFIES -> _feelingAboutSelfiesResponse.value != null
             SurveyQuestion.TAKE_SELFIE -> _selfieUri.value != null
@@ -220,10 +211,9 @@ class SurveyViewModelFactory(
 enum class SurveyQuestion {
     AGE,
     ZIPCODE,
-    //GENDER,
+    GENDER,
     IDEAL_BRIGHTNESS,
     FREE_TIME,
-    SUPERHERO,
     LAST_TAKEAWAY,
     FEELING_ABOUT_SELFIES,
     TAKE_SELFIE,
