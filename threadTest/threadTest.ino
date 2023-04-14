@@ -72,7 +72,8 @@ int DHTThread(struct pt* pt)
       }
     } 
     Serial.println();
-    PT_SLEEP(pt, 1000);
+    // read every 30 seconds
+    PT_SLEEP(pt, 5000);
   }
 
   PT_END(pt);
@@ -83,7 +84,23 @@ int fanThread(struct pt* pt)
 {
   PT_BEGIN(pt);
 
-  analogWrite(fan, 255);
+  while(1)
+  {
+    unsigned long highTime = (unsigned long) (50 * 10);
+    unsigned long lowTime = (unsigned long) (1000 - highTime);
+    unsigned long timer = millis();
+    while ((millis() - timer) < highTime)
+    {
+      digitalWrite(fan, HIGH);
+    }   
+    timer = millis();
+    while ((millis() - timer) < lowTime)
+    {
+      digitalWrite(fan, LOW);
+    }
+
+    PT_SLEEP(pt, 10);
+  }
 
   PT_END(pt);
 }
@@ -96,7 +113,8 @@ void setup()
   pinMode(fan, OUTPUT);
 
   Serial.begin(9600);
-  Serial.println("Starting.../n");
+  Serial.println("Starting...");
+  delay(3000);
   
   PT_INIT(&ptDHT);
   PT_INIT(&ptFan);
