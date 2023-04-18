@@ -101,7 +101,9 @@ dependencies {
     testImplementation(libs.androidx.test.ext.truth)
     testImplementation(libs.robolectric)
     // Amplify core dependency
-    implementation("com.amplifyframework:core:2.5.0")
+    implementation("com.amplifyframework:core:2.7.1")
+    implementation("com.amplifyframework:aws-api:2.7.1")
+    implementation("com.amplifyframework:aws-datastore:2.7.1")
 
     // Support for Java 8 features
 }

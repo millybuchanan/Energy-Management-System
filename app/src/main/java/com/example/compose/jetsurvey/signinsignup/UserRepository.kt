@@ -16,7 +16,10 @@
 
 package com.example.compose.jetsurvey.signinsignup
 
+import android.util.Log
 import androidx.compose.runtime.Immutable
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.datastore.generated.model.TestModel
 
 sealed class User {
     @Immutable
@@ -45,6 +48,14 @@ object UserRepository {
     @Suppress("UNUSED_PARAMETER")
     fun signUp(email: String, password: String) {
         _user = User.LoggedInUser(email)
+        val item = TestModel.Builder()
+            .username(email)
+            .build()
+        Amplify.DataStore.save(
+            item,
+            { success -> Log.i("Amplify", "Saved item: " + success.item().username) },
+            { error -> Log.e("Amplify", "Could not save item to DataStore", error) }
+        )
     }
 
     fun signInAsGuest() {

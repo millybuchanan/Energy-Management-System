@@ -1,15 +1,15 @@
 {
-  "dev": {
+  "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-sdemsapp-dev-64510-authRole",
-      "UnauthRoleArn": "arn:aws:iam::581816401246:role/amplify-sdemsapp-dev-64510-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::581816401246:role/amplify-sdemsapp-dev-64510-authRole",
+      "AuthRoleName": "amplify-testcrudapp-staging-21309-authRole",
+      "UnauthRoleArn": "arn:aws:iam::581816401246:role/amplify-testcrudapp-staging-21309-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::581816401246:role/amplify-testcrudapp-staging-21309-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-sdemsapp-dev-64510-deployment",
-      "UnauthRoleName": "amplify-sdemsapp-dev-64510-unauthRole",
-      "StackName": "amplify-sdemsapp-dev-64510",
-      "StackId": "arn:aws:cloudformation:us-east-1:581816401246:stack/amplify-sdemsapp-dev-64510/180a4720-ddd6-11ed-a868-12c27cd68eb3",
-      "AmplifyAppId": "djeuwnwsozxr5"
+      "DeploymentBucketName": "amplify-testcrudapp-staging-21309-deployment",
+      "UnauthRoleName": "amplify-testcrudapp-staging-21309-unauthRole",
+      "StackName": "amplify-testcrudapp-staging-21309",
+      "StackId": "arn:aws:cloudformation:us-east-1:581816401246:stack/amplify-testcrudapp-staging-21309/bf458560-d032-11ed-99ac-127b9b81d137",
+      "AmplifyAppId": "d17i6kenxhuhq7"
     }
   }
 }

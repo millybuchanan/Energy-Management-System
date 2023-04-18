@@ -24,11 +24,14 @@ import com.amplifyframework.AmplifyException
 import com.amplifyframework.core.Amplify
 import com.example.compose.jetsurvey.signinsignup.SignInSignUpScreenPreview
 import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import android.app.Application
+import com.amplifyframework.datastore.AWSDataStorePlugin
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
+            Amplify.addPlugin(AWSDataStorePlugin())
             Amplify.configure(applicationContext)
             Log.i("MyAmplifyApp", "Initialized Amplify")
         } catch (error: AmplifyException) {
