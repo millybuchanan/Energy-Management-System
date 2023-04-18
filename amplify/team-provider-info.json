@@ -10,6 +10,11 @@
       "StackName": "amplify-testcrudapp-staging-21309",
       "StackId": "arn:aws:cloudformation:us-east-1:581816401246:stack/amplify-testcrudapp-staging-21309/bf458560-d032-11ed-99ac-127b9b81d137",
       "AmplifyAppId": "d17i6kenxhuhq7"
+    },
+    "categories": {
+      "api": {
+        "TestCRUDapp": {}
+      }
     }
   }
 }

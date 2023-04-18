@@ -16,6 +16,7 @@
 
 package com.example.compose.jetsurvey.signinsignup
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 
@@ -26,6 +27,7 @@ fun SignInRoute(
     onSignInAsGuest: () -> Unit,
     onNavUp: () -> Unit,
 ) {
+    Log.i("SignInRoute", "signIn called inside signInRoute function")
     val signInViewModel: SignInViewModel = viewModel(factory = SignInViewModelFactory())
     SignInScreen(
         email = email,

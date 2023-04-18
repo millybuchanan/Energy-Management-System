@@ -46,7 +46,9 @@ object UserRepository {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun signUp(email: String, password: String) {
+    fun signUp(email: String, password: String, onSignUpComplete: (success: Boolean) -> Unit) {
+
+        Log.i("UserRepository", "signUp called")
         _user = User.LoggedInUser(email)
         val item = TestModel.Builder()
             .username(email)
@@ -56,6 +58,7 @@ object UserRepository {
             { success -> Log.i("Amplify", "Saved item: " + success.item().username) },
             { error -> Log.e("Amplify", "Could not save item to DataStore", error) }
         )
+        onSignUpComplete(true)
     }
 
     fun signInAsGuest() {
@@ -64,6 +67,21 @@ object UserRepository {
 
     fun isKnownUserEmail(email: String): Boolean {
         // if the email contains "sign up" we consider it unknown
-        return !email.contains("signup")
+        var flag = false
+        Amplify.DataStore.query(
+            TestModel::class.java,
+            { items ->
+                while (items.hasNext()) {
+                    val item = items.next()
+                    if (item.username == email) {
+                        flag = true
+                    }
+                    Log.i("Amplify", "Queried item: " + item.username)
+                }
+                Log.i("Amplify", "Checking DB: ")
+            },
+            { failure -> Log.e("Tutorial", "Could not query DataStore", failure) }
+        )
+        return flag
     }
 }

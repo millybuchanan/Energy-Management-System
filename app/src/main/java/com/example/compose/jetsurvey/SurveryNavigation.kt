@@ -16,6 +16,7 @@
 
 package com.example.compose.jetsurvey
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -90,7 +91,10 @@ fun JetsurveyNavHost(
             SignUpRoute(
                 email = startingEmail,
                 onSignUpSubmitted = {
-                    navController.navigate(SURVEY_ROUTE)
+                        success ->
+                    if (success) {
+                        navController.navigate(SIGN_IN_ROUTE)
+                    }
                 },
                 onSignInAsGuest = {
                     navController.navigate(SURVEY_ROUTE)

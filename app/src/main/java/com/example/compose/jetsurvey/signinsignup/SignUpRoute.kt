@@ -16,21 +16,25 @@
 
 package com.example.compose.jetsurvey.signinsignup
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun SignUpRoute(
     email: String?,
-    onSignUpSubmitted: () -> Unit,
+    onSignUpSubmitted: (success: Boolean) -> Unit,
     onSignInAsGuest: () -> Unit,
     onNavUp: () -> Unit,
 ) {
     val signUpViewModel: SignUpViewModel = viewModel(factory = SignUpViewModelFactory())
+    Log.i("SignUpRoute", "signUp called inside signupRoute function")
     SignUpScreen(
         email = email,
         onSignUpSubmitted = { email, password ->
-            signUpViewModel.signUp(email, password, onSignUpSubmitted)
+            signUpViewModel.signUp(email, password) { success ->
+                onSignUpSubmitted(success)
+            }
         },
         onSignInAsGuest = {
             signUpViewModel.signInAsGuest(onSignInAsGuest)
