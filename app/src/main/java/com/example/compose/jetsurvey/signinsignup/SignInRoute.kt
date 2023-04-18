@@ -32,7 +32,9 @@ fun SignInRoute(
     SignInScreen(
         email = email,
         onSignInSubmitted = { email, password ->
-            signInViewModel.signIn(email, password, onSignInSubmitted)
+            if (signInViewModel.signIn(email, password)) {
+                onSignInSubmitted()
+            }
         },
         onSignInAsGuest = {
             signInViewModel.signInAsGuest(onSignInAsGuest)

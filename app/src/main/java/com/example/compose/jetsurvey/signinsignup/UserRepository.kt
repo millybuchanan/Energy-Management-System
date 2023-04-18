@@ -41,8 +41,14 @@ object UserRepository {
         get() = _user
 
     @Suppress("UNUSED_PARAMETER")
-    fun signIn(email: String, password: String) {
-        _user = User.LoggedInUser(email)
+    fun signIn(email: String, password: String): Boolean {
+        if (isKnownUserEmail(email)) {
+            _user = User.LoggedInUser(email)
+            Log.i("Amplify", "SignIn Successful")
+            return true
+        }
+        Log.i("Amplify", "SignIn Failed")
+        return false
     }
 
     @Suppress("UNUSED_PARAMETER")

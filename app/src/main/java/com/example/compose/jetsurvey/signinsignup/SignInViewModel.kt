@@ -27,10 +27,8 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel() 
     fun signIn(
         email: String,
         password: String,
-        onSignInComplete: () -> Unit,
-    ) {
-        userRepository.signIn(email, password)
-        onSignInComplete()
+    ): Boolean {
+        return userRepository.signIn(email, password)
     }
 
     fun signInAsGuest(
