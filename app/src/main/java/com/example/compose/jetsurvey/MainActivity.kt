@@ -17,15 +17,23 @@
 package com.example.compose.jetsurvey
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import com.amplifyframework.AmplifyException
+import com.amplifyframework.core.Amplify
 import com.example.compose.jetsurvey.signinsignup.SignInSignUpScreenPreview
 import com.example.compose.jetsurvey.theme.JetsurveyTheme
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        try {
+            Amplify.configure(applicationContext)
+            Log.i("MyAmplifyApp", "Initialized Amplify")
+        } catch (error: AmplifyException) {
+            Log.e("MyAmplifyApp", "Could not initialize Amplify", error)
+        }
         setContent {
             JetsurveyTheme {
                 JetsurveyNavHost()
