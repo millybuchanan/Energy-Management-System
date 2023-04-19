@@ -16,7 +16,10 @@
 
 package com.example.compose.jetsurvey
 
+import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,12 +30,13 @@ import com.example.compose.jetsurvey.Destinations.SIGN_UP_ROUTE
 import com.example.compose.jetsurvey.Destinations.SURVEY_RESULTS_ROUTE
 import com.example.compose.jetsurvey.Destinations.SURVEY_ROUTE
 import com.example.compose.jetsurvey.Destinations.WELCOME_ROUTE
-import com.example.compose.jetsurvey.Menu_Destinations.DASHBOARD_ROUTE
 import com.example.compose.jetsurvey.signinsignup.SignInRoute
 import com.example.compose.jetsurvey.signinsignup.SignUpRoute
+import com.example.compose.jetsurvey.signinsignup.UserRepository
 import com.example.compose.jetsurvey.signinsignup.WelcomeRoute
 import com.example.compose.jetsurvey.survey.SurveyResultScreen
 import com.example.compose.jetsurvey.survey.SurveyRoute
+import kotlinx.coroutines.launch
 
 object Destinations {
     const val WELCOME_ROUTE = "welcome"
@@ -60,6 +64,7 @@ fun JetsurveyNavHost(
                     navController.navigate("signup/$it")
                 },
                 onSignInAsGuest = {
+                    UserRepository.signInAsGuest()
                     navController.navigate(SURVEY_ROUTE)
                 },
             )
@@ -67,18 +72,25 @@ fun JetsurveyNavHost(
 
         composable(SIGN_IN_ROUTE) {
             val startingEmail = it.arguments?.getString("email")
+            val coroutineScope = rememberCoroutineScope()
+
             SignInRoute(
                 email = startingEmail,
-                onSignInSubmitted = {
-                    val newUser = false // add authentication with backend here
-                    if (newUser) {
-                        navController.navigate(SURVEY_ROUTE)
-                    } else {
-                        navController.navigate(MAIN_SCREEN_ROUTE)
+                onSignInSubmitted = { email: String, password: String ->
+                    coroutineScope.launch {
+                        val success = UserRepository.signIn(email, password)
+                        Log.i("SurveyNavigation", "logged in Successful? $success")
+                        if (success) {
+                            Log.i("SurveyNavigation", "Begin Sign in")
+                            navController.navigate(MAIN_SCREEN_ROUTE)
+                            Log.i("SurveyNavigation", "End Sign in")
+                        } else {
+                            // Show error or handle unsuccessful sign-in
+                        }
                     }
-
                 },
                 onSignInAsGuest = {
+                    UserRepository.signInAsGuest()
                     navController.navigate(SURVEY_ROUTE)
                 },
                 onNavUp = navController::navigateUp,
@@ -89,10 +101,15 @@ fun JetsurveyNavHost(
             val startingEmail = it.arguments?.getString("email")
             SignUpRoute(
                 email = startingEmail,
-                onSignUpSubmitted = {
-                    navController.navigate(SURVEY_ROUTE)
+                onSignUpSubmitted = { email: String, password: String, success: Boolean ->
+                    if (success) {
+                        navController.navigate("signin/$email")
+                    } else {
+                        // Show error or handle unsuccessful sign-up
+                    }
                 },
                 onSignInAsGuest = {
+                    UserRepository.signInAsGuest()
                     navController.navigate(SURVEY_ROUTE)
                 },
                 onNavUp = navController::navigateUp,

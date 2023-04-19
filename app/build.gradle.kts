@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.compose.jetsurvey"
-        minSdk = libs.versions.minSdk.get().toInt()
+        minSdk = 24
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
@@ -46,6 +46,7 @@ android {
         }
     }
     compileOptions {
+//        coreLibraryDesugaringEnabled true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -99,4 +100,13 @@ dependencies {
     testImplementation(libs.androidx.test.ext.junit)
     testImplementation(libs.androidx.test.ext.truth)
     testImplementation(libs.robolectric)
+    // Amplify core dependency
+    implementation("com.amplifyframework:core:2.7.1")
+    implementation("com.amplifyframework:aws-api:2.7.1")
+    implementation("com.amplifyframework:aws-datastore:2.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+
+
+    // Support for Java 8 features
 }

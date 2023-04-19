@@ -17,15 +17,32 @@
 package com.example.compose.jetsurvey
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import com.amplifyframework.AmplifyException
+import com.amplifyframework.core.Amplify
 import com.example.compose.jetsurvey.signinsignup.SignInSignUpScreenPreview
 import com.example.compose.jetsurvey.theme.JetsurveyTheme
+import android.app.Application
+import com.amplifyframework.api.aws.AWSApiPlugin
+import com.amplifyframework.datastore.AWSDataStorePlugin
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        try {
+            Amplify.addPlugin(AWSDataStorePlugin())
+            Amplify.addPlugin(AWSApiPlugin())
+            Amplify.configure(applicationContext)
+            Log.i("MyAmplifyApp", "Initialized Amplify")
+            Amplify.DataStore.start(
+                { Log.i("Amplify", "DataStore started") },
+                { Log.e("Amplify", "Error starting DataStore", it) }
+            )
+        } catch (error: AmplifyException) {
+            Log.e("MyAmplifyApp", "Could not initialize Amplify", error)
+        }
         setContent {
             JetsurveyTheme {
                 JetsurveyNavHost()

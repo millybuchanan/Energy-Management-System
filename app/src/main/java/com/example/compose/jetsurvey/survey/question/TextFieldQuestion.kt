@@ -26,25 +26,33 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 
 
-@Preview
+
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun TextFieldQuestion() {
-
+fun TextFieldQuestion(
+    @StringRes titleResourceId: Int,
+    modifier: Modifier = Modifier,
+    ) {
     var text by rememberSaveable { mutableStateOf("") }
+    QuestionWrapper(
+        titleResourceId = titleResourceId,
+        modifier = modifier,
+    ) {
+        TextField(
+            value = text,
+            onValueChange = { text = it },
+            label = { Text("Age") },
+            placeholder = { Text("My age is ...") },
 
-    TextField(
-        value = text,
-        onValueChange = { text = it },
-        label = { Text("Age") },
-        placeholder = { Text("My age is ...") }
-    )
+            )
+    }
+
 }
 
-@Preview
+
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun ZipCodeQuestionPreview() {
+fun ZipCodeQuestion(flag: Boolean) {
 
     var text by rememberSaveable { mutableStateOf("") }
 

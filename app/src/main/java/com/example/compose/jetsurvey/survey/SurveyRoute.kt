@@ -33,6 +33,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.compose.jetsurvey.R
+import com.example.compose.jetsurvey.survey.question.ZipCodeQuestion
 import com.google.android.material.datepicker.MaterialDatePicker
 
 private const val CONTENT_ANIMATION_DURATION = 300
@@ -69,7 +71,7 @@ fun SurveyRoute(
         onDonePressed = { viewModel.onDonePressed(onSurveyComplete) }
     ) { paddingValues ->
 
-        val modifier = Modifier.padding(paddingValues)
+        var modifier = Modifier.padding(paddingValues)
 
         AnimatedContent(
             targetState = surveyScreenData,
@@ -91,10 +93,43 @@ fun SurveyRoute(
         ) { targetState ->
 
             when (targetState.surveyQuestion) {
+                SurveyQuestion.AGE -> {
+                    AgeQuestion(
+                    value = viewModel.userAgeResponse,
+                    onValueChange = viewModel::onAgeResponse,
+                    modifier = modifier,
+                        titleResourceId = R.string.age,
+                    )
+                }
+
+                SurveyQuestion.ZIPCODE -> {
+                    ZipCodeQuestion(
+                        value = viewModel.zipcodeResponse,
+                        onValueChange = viewModel::onZipcodeResponse,
+                        modifier = modifier,
+                        titleResourceId = R.string.zipcode
+                    )
+                }
+
+                SurveyQuestion.GENDER -> {
+                    GenderQuestion(
+                        selectedAnswer = viewModel.genderResponse,
+                        onOptionSelected = viewModel::onGenderResponse,
+                        modifier = modifier
+                    )
+                }
+
                 SurveyQuestion.IDEAL_BRIGHTNESS -> {
                     BrightnessQuestion(
                         value = viewModel.idealBrightnessResponse,
                         onValueChange = viewModel::onIdealBrightnessResponse,
+                        modifier = modifier,
+                    )
+                }
+                SurveyQuestion.IDEAL_TEMPERATURE -> {
+                    TemperatureQuestion(
+                        value = viewModel.idealTemperatureResponse,
+                        onValueChange = viewModel::onIdealTemperatureResponse,
                         modifier = modifier,
                     )
                 }
@@ -106,11 +141,6 @@ fun SurveyRoute(
                     )
                 }
 
-                SurveyQuestion.SUPERHERO -> SuperheroQuestion(
-                    selectedAnswer = viewModel.superheroResponse,
-                    onOptionSelected = viewModel::onSuperheroResponse,
-                    modifier = modifier,
-                )
 
                 SurveyQuestion.LAST_TAKEAWAY -> {
                     val supportFragmentManager =

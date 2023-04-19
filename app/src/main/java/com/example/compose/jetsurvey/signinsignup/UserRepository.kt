@@ -16,7 +16,15 @@
 
 package com.example.compose.jetsurvey.signinsignup
 
+import android.util.Log
 import androidx.compose.runtime.Immutable
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.datastore.generated.model.TestModel
+import kotlinx.coroutines.*
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
+
+
 
 sealed class User {
     @Immutable
@@ -37,22 +45,127 @@ object UserRepository {
     val user: User
         get() = _user
 
-    @Suppress("UNUSED_PARAMETER")
-    fun signIn(email: String, password: String) {
-        _user = User.LoggedInUser(email)
+    suspend fun signIn(email: String, password: String): Boolean {
+        return signInSuspend(email, password)
     }
 
-    @Suppress("UNUSED_PARAMETER")
-    fun signUp(email: String, password: String) {
-        _user = User.LoggedInUser(email)
+    suspend fun signInSuspend(email: String, password: String): Boolean = suspendCancellableCoroutine { continuation ->
+        val predicate = TestModel.USERNAME.eq(email).and(TestModel.PASSWORD.eq(password))
+
+        try {
+            Amplify.DataStore.query(
+                TestModel::class.java,
+                predicate,
+                { items ->
+                    val signedIn = if (items.hasNext()) {
+                        _user = User.LoggedInUser(email)
+                        Log.i("UserRepository", "signIn successful")
+                        true
+                    } else {
+                        Log.i("UserRepository", "signIn failed")
+                        false
+                    }
+                    continuation.resume(signedIn)
+                },
+                { failure ->
+                    Log.e("Tutorial", "Could not query DataStore", failure)
+                    continuation.resume(false)
+                }
+            )
+        } catch (exception: Exception) {
+            Log.e("UserRepository", "Error querying item from DataStore", exception)
+            continuation.resume(false)
+        }
     }
+
+
+
+
+    @Suppress("UNUSED_PARAMETER")
+    fun signUp(email: String, password: String, onSignUpComplete: (success: Boolean) -> Unit) {
+        Log.i("UserRepository", "signUp called")
+
+        CoroutineScope(Dispatchers.IO).launch {
+            // Check if the user already exists
+            val userExists = isKnownUserEmail(email)
+            if (userExists) {
+                Log.i("UserRepository", "User already exists")
+                withContext(Dispatchers.Main) {
+                    onSignUpComplete(false)
+                }
+                return@launch
+            }
+
+            _user = User.LoggedInUser(email)
+            val item = TestModel.Builder()
+                .username(email)
+                .password(password)
+                .build()
+
+            try {
+                val success = saveToDataStore(item)
+                withContext(Dispatchers.Main) {
+                    onSignUpComplete(success)
+                }
+            } catch (exception: Exception) {
+                Log.e("UserRepository", "Error saving item to DataStore", exception)
+                withContext(Dispatchers.Main) {
+                    onSignUpComplete(false)
+                }
+            }
+        }
+    }
+
+
+    private suspend fun saveToDataStore(item: TestModel): Boolean {
+        return suspendCoroutine { continuation ->
+            Amplify.DataStore.save(
+                item,
+                { success ->
+                    Log.i("Amplify", "Saved item: " + success.item().username)
+                    continuation.resume(true)
+                },
+                { error ->
+                    Log.e("Amplify", "Could not save item to DataStore", error)
+                    continuation.resumeWith(Result.failure(error))
+                }
+            )
+        }
+    }
+
 
     fun signInAsGuest() {
         _user = User.GuestUser
     }
 
-    fun isKnownUserEmail(email: String): Boolean {
+    suspend fun isKnownUserEmail(email: String): Boolean = suspendCancellableCoroutine { continuation ->
         // if the email contains "sign up" we consider it unknown
-        return !email.contains("signup")
+        val predicate = TestModel.USERNAME.eq(email)
+
+        try {
+            Amplify.DataStore.query(
+                TestModel::class.java,
+                predicate,
+                { items ->
+                    var flag = false
+                    while (items.hasNext()) {
+                        val item = items.next()
+                        if (item.username == email) {
+                            flag = true
+                        }
+                        Log.i("Amplify", "Queried item: " + item.username)
+                    }
+                    Log.i("Amplify", "Checking DB: ")
+                    continuation.resume(flag)
+                },
+                { failure ->
+                    Log.e("Tutorial", "Could not query DataStore", failure)
+                    continuation.resume(false)
+                }
+            )
+        } catch (exception: Exception) {
+            Log.e("UserRepository", "Error querying item from DataStore", exception)
+            continuation.resume(false)
+        }
     }
 }

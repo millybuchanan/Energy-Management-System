@@ -18,6 +18,10 @@ package com.example.compose.jetsurvey.signinsignup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class WelcomeViewModel(private val userRepository: UserRepository) : ViewModel() {
 
@@ -26,12 +30,18 @@ class WelcomeViewModel(private val userRepository: UserRepository) : ViewModel()
         onNavigateToSignIn: (email: String) -> Unit,
         onNavigateToSignUp: (email: String) -> Unit,
     ) {
-        if (userRepository.isKnownUserEmail(email)) {
-            onNavigateToSignIn(email)
-        } else {
-            onNavigateToSignUp(email)
+        viewModelScope.launch(Dispatchers.IO) {
+            val isKnownEmail = userRepository.isKnownUserEmail(email)
+            withContext(Dispatchers.Main) {
+                if (isKnownEmail) {
+                    onNavigateToSignIn(email)
+                } else {
+                    onNavigateToSignUp(email)
+                }
+            }
         }
     }
+
 
     fun signInAsGuest(
         onSignInComplete: () -> Unit,

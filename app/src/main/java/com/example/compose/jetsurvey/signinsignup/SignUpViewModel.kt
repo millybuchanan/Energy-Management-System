@@ -16,6 +16,7 @@
 
 package com.example.compose.jetsurvey.signinsignup
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
@@ -24,20 +25,13 @@ class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() 
     /**
      * Consider all sign ups successful
      */
-    fun signUp(
-        email: String,
-        password: String,
-        onSignUpComplete: () -> Unit,
-    ) {
-        userRepository.signUp(email, password)
-        onSignUpComplete()
+    fun signUp(email: String, password: String, onSignUpComplete: (success: Boolean) -> Unit) {
+        UserRepository.signUp(email, password, onSignUpComplete)
     }
 
-    fun signInAsGuest(
-        onSignInComplete: () -> Unit,
-    ) {
-        userRepository.signInAsGuest()
-        onSignInComplete()
+    fun signInAsGuest(onSignInAsGuest: () -> Unit) {
+        UserRepository.signInAsGuest()
+        onSignInAsGuest()
     }
 }
 

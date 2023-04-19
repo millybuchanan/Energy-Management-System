@@ -17,28 +17,97 @@
 package com.example.compose.jetsurvey.survey
 
 import android.net.Uri
+import androidx.annotation.StringRes
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 //import androidx.compose.ui.tooling.preview.Preview
 //import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.example.compose.jetsurvey.R
 import com.example.compose.jetsurvey.survey.question.*
+import kotlin.reflect.KFunction1
 
-/*
+
+
+//@Composable
+//fun GenderQuestion(
+//    selectedAnswer: List<Int>,
+//    onOptionSelected: (selected: Boolean, answer: Int) -> Unit,
+//    modifier: Modifier = Modifier,
+//) {
+//    RadioButton(
+//        text = R.string.age,
+//        selected = R.string.select_one,
+//        onOptionSelected = { onOptionSelected })
+//}
+
+//also add temperature question here
+
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GenderQuestion(
-    selectedAnswer: List<Int>,
-    onOptionSelected: (selected: Boolean, answer: Int) -> Unit,
+fun AgeQuestion(
+    value: Int?,
+    onValueChange: KFunction1<Int, Unit>,
+    @StringRes titleResourceId: Int,
     modifier: Modifier = Modifier,
 ) {
-    RadioButton(
-        text = R.string.age,
-        selected = R.string.select_one,
-        onOptionSelected = { onOptionSelected })
-}*/
+    var text by rememberSaveable { mutableStateOf(value?.toString() ?: "") }
+    QuestionWrapper(
+        titleResourceId = titleResourceId,
+        modifier = modifier,
+    ) {
+        TextField(
+            value = text,
+            onValueChange = { newText ->
+                text = newText
+                val age = newText.toIntOrNull()
+                if (age != null) {
+                    onValueChange(age)
+                }
+            },
+            label = { Text("Age") },
+            placeholder = { Text("My age is ...") },
+            modifier = modifier,
+        )
+    }
 
-//also add temperaturequestion here
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+fun ZipCodeQuestion(
+    value: Int?,
+    onValueChange: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+    @StringRes titleResourceId: Int,
+    ){
+
+    var text by rememberSaveable { mutableStateOf("") }
+
+    QuestionWrapper(titleResourceId = titleResourceId, modifier = modifier) {
+        TextField(
+            value = text,
+            onValueChange = { newText ->
+                text = newText
+                val zip = newText.toIntOrNull()
+                if (zip != null) {
+                    onValueChange(zip)
+                } },
+            label = { Text("ZipCode") },
+            placeholder = { Text("My zipcode is ...") },
+            modifier = modifier
+        )
+    }
+
+}
+
 
 @Composable
 fun BrightnessQuestion(
@@ -58,6 +127,44 @@ fun BrightnessQuestion(
 }
 
 @Composable
+fun TemperatureQuestion(
+    value: Float?,
+    onValueChange: (Float) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    SliderQuestion(
+        titleResourceId = R.string.temperature,
+        value = value,
+        onValueChange = onValueChange,
+        startTextResource = R.string.cool_temp,
+        neutralTextResource = R.string.neutral_temp,
+        endTextResource = R.string.warm_temp,
+        modifier = modifier,
+    )
+}
+
+
+@Composable
+fun GenderQuestion(
+    selectedAnswer: Int?,
+    onOptionSelected: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    SingleChoiceQuestion(
+        titleResourceId = R.string.gender,
+        directionsResourceId = R.string.select_one,
+        possibleAnswers = listOf(
+            R.string.female,
+            R.string.male,
+            R.string.nonbinary,
+        ),
+        selectedAnswer = selectedAnswer,
+        onOptionSelected = onOptionSelected,
+        modifier = modifier,
+    )
+}
+
+@Composable
 fun FreeTimeQuestion(
     selectedAnswers: List<Int>,
     onOptionSelected: (selected: Boolean, answer: Int) -> Unit,
@@ -67,8 +174,6 @@ fun FreeTimeQuestion(
         titleResourceId = R.string.age,
         directionsResourceId = R.string.select_all,
         possibleAnswers = listOf(
-            //R.string.read,
-            //R.string.work_out,
             R.string.draw,
             R.string.play_games,
             R.string.dance,
@@ -80,26 +185,6 @@ fun FreeTimeQuestion(
     )
 }
 
-@Composable
-fun SuperheroQuestion(
-    selectedAnswer: Superhero?,
-    onOptionSelected: (Superhero) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    SingleChoiceQuestion(
-        titleResourceId = R.string.pick_superhero,
-        directionsResourceId = R.string.select_one,
-        possibleAnswers = listOf(
-            Superhero(R.string.spark, R.drawable.spark),
-            Superhero(R.string.lenz, R.drawable.lenz),
-            Superhero(R.string.bugchaos, R.drawable.bug_of_chaos),
-            Superhero(R.string.frag, R.drawable.frag),
-        ),
-        selectedAnswer = selectedAnswer,
-        onOptionSelected = onOptionSelected,
-        modifier = modifier,
-    )
-}
 
 @Composable
 fun TakeawayQuestion(
@@ -113,6 +198,7 @@ fun TakeawayQuestion(
         dateInMillis = dateInMillis,
         onClick = onClick,
         modifier = modifier,
+
     )
 }
 
