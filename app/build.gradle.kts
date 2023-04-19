@@ -104,6 +104,9 @@ dependencies {
     implementation("com.amplifyframework:core:2.7.1")
     implementation("com.amplifyframework:aws-api:2.7.1")
     implementation("com.amplifyframework:aws-datastore:2.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+
 
     // Support for Java 8 features
 }

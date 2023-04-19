@@ -23,7 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun SignInRoute(
     email: String?,
-    onSignInSubmitted: () -> Unit,
+    onSignInSubmitted: (String, String) -> Unit,
     onSignInAsGuest: () -> Unit,
     onNavUp: () -> Unit,
 ) {
@@ -32,13 +32,26 @@ fun SignInRoute(
     SignInScreen(
         email = email,
         onSignInSubmitted = { email, password ->
-            if (signInViewModel.signIn(email, password)) {
-                onSignInSubmitted()
+            Log.i("SignInRoute", "onSignInSubmitted called inside signInRoute function")
+            signInViewModel.signInWithCallback(email, password) { success ->
+                if (success) {
+                    Log.i("SignInRoute", "signInViewModel.signIn(email, password) called inside signInRoute function")
+                    onSignInSubmitted(email, password)
+                } else {
+                    Log.i("SignInRoute", "failed")
+                }
             }
         },
         onSignInAsGuest = {
+            Log.i("SignInRoute", "signInAsGuest called inside signInRoute function")
             signInViewModel.signInAsGuest(onSignInAsGuest)
         },
         onNavUp = onNavUp,
     )
 }
+
+
+
+
+
+

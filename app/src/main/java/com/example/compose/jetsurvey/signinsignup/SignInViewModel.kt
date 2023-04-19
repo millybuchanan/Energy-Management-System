@@ -18,24 +18,28 @@ package com.example.compose.jetsurvey.signinsignup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 class SignInViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     /**
      * Consider all sign ins successful
      */
-    fun signIn(
-        email: String,
-        password: String,
-    ): Boolean {
-        return userRepository.signIn(email, password)
+    suspend fun signIn(email: String, password: String): Boolean {
+        return userRepository.signInSuspend(email, password)
     }
 
-    fun signInAsGuest(
-        onSignInComplete: () -> Unit,
-    ) {
-        userRepository.signInAsGuest()
-        onSignInComplete()
+    fun signInWithCallback(email: String, password: String, onSignInResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val success = signIn(email, password)
+            onSignInResult(success)
+        }
+    }
+
+    fun signInAsGuest(onSignInAsGuest: () -> Unit) {
+        UserRepository.signInAsGuest()
+        onSignInAsGuest()
     }
 }
 

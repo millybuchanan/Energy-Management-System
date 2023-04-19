@@ -23,7 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun SignUpRoute(
     email: String?,
-    onSignUpSubmitted: (success: Boolean) -> Unit,
+    onSignUpSubmitted: (email: String, password: String, success: Boolean) -> Unit,
     onSignInAsGuest: () -> Unit,
     onNavUp: () -> Unit,
 ) {
@@ -33,7 +33,7 @@ fun SignUpRoute(
         email = email,
         onSignUpSubmitted = { email, password ->
             signUpViewModel.signUp(email, password) { success ->
-                onSignUpSubmitted(success)
+                onSignUpSubmitted(email, password, success)
             }
         },
         onSignInAsGuest = {

@@ -27,8 +27,10 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 public final class TestModel implements Model {
   public static final QueryField ID = field("TestModel", "id");
   public static final QueryField USERNAME = field("TestModel", "username");
+  public static final QueryField PASSWORD = field("TestModel", "password");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String username;
+  private final @ModelField(targetType="String", isRequired = true) String password;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String resolveIdentifier() {
@@ -43,6 +45,10 @@ public final class TestModel implements Model {
       return username;
   }
   
+  public String getPassword() {
+      return password;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -51,9 +57,10 @@ public final class TestModel implements Model {
       return updatedAt;
   }
   
-  private TestModel(String id, String username) {
+  private TestModel(String id, String username, String password) {
     this.id = id;
     this.username = username;
+    this.password = password;
   }
   
   @Override
@@ -66,6 +73,7 @@ public final class TestModel implements Model {
       TestModel testModel = (TestModel) obj;
       return ObjectsCompat.equals(getId(), testModel.getId()) &&
               ObjectsCompat.equals(getUsername(), testModel.getUsername()) &&
+              ObjectsCompat.equals(getPassword(), testModel.getPassword()) &&
               ObjectsCompat.equals(getCreatedAt(), testModel.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), testModel.getUpdatedAt());
       }
@@ -76,6 +84,7 @@ public final class TestModel implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getUsername())
+      .append(getPassword())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -88,6 +97,7 @@ public final class TestModel implements Model {
       .append("TestModel {")
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("username=" + String.valueOf(getUsername()) + ", ")
+      .append("password=" + String.valueOf(getPassword()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -109,16 +119,23 @@ public final class TestModel implements Model {
   public static TestModel justId(String id) {
     return new TestModel(
       id,
+      null,
       null
     );
   }
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      username);
+      username,
+      password);
   }
   public interface UsernameStep {
-    BuildStep username(String username);
+    PasswordStep username(String username);
+  }
+  
+
+  public interface PasswordStep {
+    BuildStep password(String password);
   }
   
 
@@ -128,22 +145,31 @@ public final class TestModel implements Model {
   }
   
 
-  public static class Builder implements UsernameStep, BuildStep {
+  public static class Builder implements UsernameStep, PasswordStep, BuildStep {
     private String id;
     private String username;
+    private String password;
     @Override
      public TestModel build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
         return new TestModel(
           id,
-          username);
+          username,
+          password);
     }
     
     @Override
-     public BuildStep username(String username) {
+     public PasswordStep username(String username) {
         Objects.requireNonNull(username);
         this.username = username;
+        return this;
+    }
+    
+    @Override
+     public BuildStep password(String password) {
+        Objects.requireNonNull(password);
+        this.password = password;
         return this;
     }
     
@@ -159,14 +185,20 @@ public final class TestModel implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String username) {
+    private CopyOfBuilder(String id, String username, String password) {
       super.id(id);
-      super.username(username);
+      super.username(username)
+        .password(password);
     }
     
     @Override
      public CopyOfBuilder username(String username) {
       return (CopyOfBuilder) super.username(username);
+    }
+    
+    @Override
+     public CopyOfBuilder password(String password) {
+      return (CopyOfBuilder) super.password(password);
     }
   }
   
