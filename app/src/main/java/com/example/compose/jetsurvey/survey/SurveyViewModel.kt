@@ -34,10 +34,6 @@ class SurveyViewModel(
         SurveyQuestion.GENDER,
         SurveyQuestion.IDEAL_BRIGHTNESS,
         SurveyQuestion.IDEAL_TEMPERATURE,
-        SurveyQuestion.FREE_TIME,
-        SurveyQuestion.LAST_TAKEAWAY,
-        SurveyQuestion.FEELING_ABOUT_SELFIES,
-        SurveyQuestion.TAKE_SELFIE,
 
     )
 
@@ -70,22 +66,6 @@ class SurveyViewModel(
     private val _idealTemperatureResponse = mutableStateOf<Float?>(null)
     val idealTemperatureResponse: Float?
         get() = _idealBrightnessResponse.value
-
-    private val _freeTimeResponse = mutableStateListOf<Int>()
-    val freeTimeResponse: List<Int>
-        get() = _freeTimeResponse
-
-    private val _takeawayResponse = mutableStateOf<Long?>(null)
-    val takeawayResponse: Long?
-        get() = _takeawayResponse.value
-
-    private val _feelingAboutSelfiesResponse = mutableStateOf<Float?>(null)
-    val feelingAboutSelfiesResponse: Float?
-        get() = _feelingAboutSelfiesResponse.value
-
-    private val _selfieUri = mutableStateOf<Uri?>(null)
-    val selfieUri
-        get() = _selfieUri.value
 
     // ----- Survey status exposed as State -----
 
@@ -130,21 +110,6 @@ class SurveyViewModel(
         onSurveyComplete()
     }
 
-    fun onFreeTimeResponse(selected: Boolean, answer: Int) {
-        if (selected) {
-            _freeTimeResponse.add(answer)
-        } else {
-            _freeTimeResponse.remove(answer)
-        }
-        _isNextEnabled.value = getIsNextEnabled()
-    }
-
-
-    fun onTakeawayResponse(timestamp: Long) {
-        _takeawayResponse.value = timestamp
-        _isNextEnabled.value = getIsNextEnabled()
-    }
-
     fun onIdealBrightnessResponse(feeling: Float) {
         _idealBrightnessResponse.value = feeling
         _isNextEnabled.value = getIsNextEnabled()
@@ -171,15 +136,6 @@ class SurveyViewModel(
         _zipcodeResponse.value = zip
         _isNextEnabled.value = getIsNextEnabled()
     }
-    fun onFeelingAboutSelfiesResponse(feeling: Float) {
-        _feelingAboutSelfiesResponse.value = feeling
-        _isNextEnabled.value = getIsNextEnabled()
-    }
-
-    fun onSelfieResponse(uri: Uri) {
-        _selfieUri.value = uri
-        _isNextEnabled.value = getIsNextEnabled()
-    }
 
     fun getNewSelfieUri() = photoUriManager.buildNewUri()
 
@@ -190,10 +146,6 @@ class SurveyViewModel(
             SurveyQuestion.GENDER -> _genderResponse != null
             SurveyQuestion.IDEAL_BRIGHTNESS ->_idealBrightnessResponse.value != null
             SurveyQuestion.IDEAL_TEMPERATURE ->_idealTemperatureResponse.value != null
-            SurveyQuestion.FREE_TIME -> _freeTimeResponse.isNotEmpty()
-            SurveyQuestion.LAST_TAKEAWAY -> _takeawayResponse.value != null
-            SurveyQuestion.FEELING_ABOUT_SELFIES -> _feelingAboutSelfiesResponse.value != null
-            SurveyQuestion.TAKE_SELFIE -> _selfieUri.value != null
         }
     }
 
@@ -226,10 +178,6 @@ enum class SurveyQuestion {
     GENDER,
     IDEAL_BRIGHTNESS,
     IDEAL_TEMPERATURE,
-    FREE_TIME,
-    LAST_TAKEAWAY,
-    FEELING_ABOUT_SELFIES,
-    TAKE_SELFIE,
 }
 
 data class SurveyScreenData(
