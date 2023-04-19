@@ -31,18 +31,6 @@ import com.amplifyframework.datastore.AWSDataStorePlugin
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
-            Amplify.addPlugin(AWSDataStorePlugin())
-            Amplify.addPlugin(AWSApiPlugin())
-            Amplify.configure(applicationContext)
-            Log.i("MyAmplifyApp", "Initialized Amplify")
-            Amplify.DataStore.start(
-                { Log.i("Amplify", "DataStore started") },
-                { Log.e("Amplify", "Error starting DataStore", it) }
-            )
-        } catch (error: AmplifyException) {
-            Log.e("MyAmplifyApp", "Could not initialize Amplify", error)
-        }
         setContent {
             JetsurveyTheme {
                 JetsurveyNavHost()
@@ -50,3 +38,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
