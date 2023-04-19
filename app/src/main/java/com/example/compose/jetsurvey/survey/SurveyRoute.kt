@@ -133,44 +133,6 @@ fun SurveyRoute(
                         modifier = modifier,
                     )
                 }
-                SurveyQuestion.FREE_TIME -> {
-                    FreeTimeQuestion(
-                        selectedAnswers = viewModel.freeTimeResponse,
-                        onOptionSelected = viewModel::onFreeTimeResponse,
-                        modifier = modifier,
-                    )
-                }
-
-
-                SurveyQuestion.LAST_TAKEAWAY -> {
-                    val supportFragmentManager =
-                        LocalContext.current.findActivity().supportFragmentManager
-                    TakeawayQuestion(
-                        dateInMillis = viewModel.takeawayResponse,
-                        onClick = {
-                            showTakeawayDatePicker(
-                                date = viewModel.takeawayResponse,
-                                supportFragmentManager = supportFragmentManager,
-                                onDateSelected = viewModel::onTakeawayResponse
-                            )
-                        },
-                        modifier = modifier,
-                    )
-                }
-
-                SurveyQuestion.FEELING_ABOUT_SELFIES ->
-                    FeelingAboutSelfiesQuestion(
-                        value = viewModel.feelingAboutSelfiesResponse,
-                        onValueChange = viewModel::onFeelingAboutSelfiesResponse,
-                        modifier = modifier,
-                    )
-
-                SurveyQuestion.TAKE_SELFIE -> TakeSelfieQuestion(
-                    imageUri = viewModel.selfieUri,
-                    getNewImageUri = viewModel::getNewSelfieUri,
-                    onPhotoTaken = viewModel::onSelfieResponse,
-                    modifier = modifier,
-                )
             }
         }
     }

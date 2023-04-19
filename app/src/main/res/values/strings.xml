@@ -78,10 +78,9 @@
     <string name="add_photo">ADD PHOTO</string>
     <string name="retake_photo">RETAKE PHOTO</string>
 
-    <string name="survey_result_title">Compose</string>
-    <string name="survey_result_subtitle">Congratulations, you are Compose</string>
-    <string name="survey_result_description">You are a curious developer, always willing to try
-        something new. You want to stay up to date with the trends to Compose is your middle name.</string>
+    <string name="survey_result_title">Congratulations</string>
+    <string name="survey_result_subtitle">Congratulations, you finished the survey!</string>
+    <string name="survey_result_description">Now click the Done button at the bottom to begin using our App</string>
     <string name="strongly_dislike">Strongly\nDislike</string>
     <string name="strongly_like">Strongly\nLike</string>
     <string name="neutral">Neutral</string>
